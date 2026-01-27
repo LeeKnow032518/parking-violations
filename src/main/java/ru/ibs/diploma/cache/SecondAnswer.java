@@ -65,6 +65,17 @@ public class SecondAnswer implements Answer{
         }
     }
 
+    @Override
+    public String getAnswer() {
+        StringBuilder sb = new StringBuilder();
+
+        for(String key : result.keySet()){
+            sb.append(key).append(" ").append(result.get(key) ).append("\n");
+        }
+
+        return sb.toString();
+    }
+
     /**
      * Сравнивает текущий объект с указанным на равенство.
      * <p>

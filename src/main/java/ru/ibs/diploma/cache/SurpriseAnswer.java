@@ -102,6 +102,28 @@ public class SurpriseAnswer implements Answer{
                 });
     }
 
+    @Override
+    public String getAnswer() {
+        StringBuilder sb = new StringBuilder();
+
+        answers.entrySet()
+            .stream()
+            .sorted(Map.Entry.comparingByValue(
+                Comparator.comparing(
+                    Statistics::avgMarketValue,
+                    Comparator.nullsLast(BigDecimal::compareTo)
+                )
+            ))
+            .forEach(entry -> {
+                Statistics stats = entry.getValue();
+                String key = entry.getKey();
+                sb.append(stats.avgMarketValue()).append(" ")
+                    .append(stats.avgNumOfFines()).append(" ").append(key).append("\n");
+            });
+
+        return sb.toString();
+    }
+
     /**
      * Сравнивает текущий объект с указанным на равенство.
      * <p>

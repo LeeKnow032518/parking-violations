@@ -11,4 +11,6 @@ package ru.ibs.diploma.cache;
  * */
 public interface Answer {
     public void printAnswer();
+
+    public String getAnswer();
 }

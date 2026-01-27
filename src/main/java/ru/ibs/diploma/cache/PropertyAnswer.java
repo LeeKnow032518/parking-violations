@@ -81,6 +81,21 @@ public class PropertyAnswer implements Answer{
         }
     }
 
+    @Override
+    public String getAnswer() {
+        StringBuilder sb = new StringBuilder();
+
+        if (answers.isEmpty()){
+            return "No  data.";
+        } else {
+            for(Map.Entry<String, FirstAnswer> entry : answers.entrySet()){
+                sb.append(entry.getKey()).append(" ")
+                    .append(entry.getValue().getResult()).append("\n");
+            }
+        }
+        return sb.toString();
+    }
+
     /**
      * Добавляет или обновляет запись в коллекции по заданному коду.
      *

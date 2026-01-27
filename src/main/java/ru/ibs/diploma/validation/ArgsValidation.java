@@ -3,11 +3,9 @@ package ru.ibs.diploma.validation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.ibs.diploma.data.FileNames;
 import ru.ibs.diploma.logging.WriteLogService;
 import ru.ibs.diploma.ui.UserChoice;
@@ -42,7 +40,7 @@ import java.nio.file.Paths;
  * @see WriteLogService
  * @see UserChoice
  */
-@Component
+@Service
 @Order(1)
 @RequiredArgsConstructor
 public class ArgsValidation implements CommandLineRunner {
@@ -117,12 +115,21 @@ public class ArgsValidation implements CommandLineRunner {
      * @throws IllegalArgumentException если хотя бы одна проверка не пройдена
      */
     public void validateArgs(String[] args) throws IllegalArgumentException {
-        if (args == null || args.length == 0) {
+        int length = 0;
+
+        for(int i=0;i<5;i++){
+            if(args[i] == null){
+                continue;
+            }
+            length ++;
+        }
+
+        if (length == 0) {
             throw new IllegalArgumentException("No arguments provided. Expected: format data.csv output.csv config.csv log.txt");
         }
 
-        if(args.length != 5){
-            throw new IllegalArgumentException("Wrong number of args. Expected 5, received " + args.length);
+        if(length < 5){
+            throw new IllegalArgumentException("Wrong number of args. Expected 5, received " + length);
         }
 
         if(!args[0].equalsIgnoreCase("csv") && !args[0].equalsIgnoreCase("json")){
@@ -130,8 +137,8 @@ public class ArgsValidation implements CommandLineRunner {
         }
 
         String format = args[1].split("\\.")[1];
-        if((format.equals("txt") && args[0].equalsIgnoreCase("json"))
-                || (format.equals("json") && args[0].equalsIgnoreCase("text"))){
+        if((format.equals("csv") && args[0].equalsIgnoreCase("json"))
+                || (format.equals("json") && args[0].equalsIgnoreCase("csv"))){
             throw new IllegalArgumentException("Wrong file extension. Expected " + args[0].toLowerCase() +
                     " but received " + format);
         }

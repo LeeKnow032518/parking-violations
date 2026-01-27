@@ -50,6 +50,11 @@ public class FirstAnswer implements Answer{
         System.out.println(result);
     }
 
+    @Override
+    public String getAnswer() {
+        return result.toString();
+    }
+
     /**
      * Возвращает результат вычисления.
      *
