@@ -41,29 +41,26 @@ import java.nio.file.Paths;
  * @see UserChoice
  */
 @Service
-@Order(1)
 @RequiredArgsConstructor
-public class ArgsValidation implements CommandLineRunner {
-
-    @Autowired
-    private ApplicationContext context;
+public class ArgsValidation{
+//
+//    @Autowired
+//    private ApplicationContext context;
     /**
      * Сервис для записи логов.
      */
-    @Autowired
-    private WriteLogService writeLogService;
+    private final WriteLogService writeLogService;
 
     /**
      * Компонент, формирующий пользовательское приветственное сообщение.
      */
-    @Autowired
-    private UserChoice userChoice;
+    private final UserChoice userChoice;
 
     /**
      * Объект-держатель имён файлов, заполняемый после успешной валидации.
      */
-    @Autowired
-    private FileNames fileNames;
+
+    private final FileNames fileNames;
 
     /**
      * Точка входа Spring-приложения.
@@ -76,7 +73,6 @@ public class ArgsValidation implements CommandLineRunner {
      * @throws InterruptedException если поток прерван во время задержки
      *                              перед завершением приложения
      */
-    @Override
     public void run(String[] args) throws InterruptedException {
         try {
             validateArgs(args);
@@ -117,8 +113,8 @@ public class ArgsValidation implements CommandLineRunner {
     public void validateArgs(String[] args) throws IllegalArgumentException {
         int length = 0;
 
-        for(int i=0;i<5;i++){
-            if(args[i] == null){
+        for(String argument : args){
+            if(argument == null){
                 continue;
             }
             length ++;
@@ -137,8 +133,7 @@ public class ArgsValidation implements CommandLineRunner {
         }
 
         String format = args[1].split("\\.")[1];
-        if((format.equals("csv") && args[0].equalsIgnoreCase("json"))
-                || (format.equals("json") && args[0].equalsIgnoreCase("csv"))){
+        if(!format.equalsIgnoreCase(args[0])){
             throw new IllegalArgumentException("Wrong file extension. Expected " + args[0].toLowerCase() +
                     " but received " + format);
         }

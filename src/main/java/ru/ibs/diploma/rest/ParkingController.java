@@ -30,7 +30,7 @@ public class ParkingController {
 
     private final WriteLogService writeLogService;
 
-    private FileNames fileNames = new FileNames();
+    private final FileNames fileNames;
 
     @GetMapping("/arguments")
     public ResponseEntity<String> getArguments(){

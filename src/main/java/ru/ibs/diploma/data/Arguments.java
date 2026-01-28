@@ -1,11 +1,13 @@
 package ru.ibs.diploma.data;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 // csv parking.csv properties.csv population.txt log
 @Getter
 @Setter
+@Builder(toBuilder = true)
 public class Arguments {
 
     private String parkingFormat;

@@ -3,7 +3,7 @@ package ru.ibs.diploma;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "ru.ibs.diploma")
 public class DiplomaApplication {
 
 	public static void main(String[] args) {
